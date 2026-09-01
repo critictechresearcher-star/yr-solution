@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="description" content="Yenova HR Solutions — Specialized talent acquisition and HR solutions partner for growing businesses.">
+ <title>Yenova HR Solutions | Connecting Talent, Creating Growth</title>
+ <style>
+ *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+ html{scroll-behavior:smooth}
+ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#17202A;background:#fff;line-height:1.6;overflow-x:hidden}
+ img{display:block;max-width:100%;height:auto}
+ a{color:inherit;text-decoration:none}
+ button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+ :root{
+ --navy:#082B52;--navy-dark:#051e3a;--gold:#C5963A;--gold-dark:#a67d2a;
+ --white:#fff;--off-white:#F7F8FA;--text-mid:#4a5568;--border:#e2e6ec;
+ }
+
+ /* NAVBAR */
+ .navbar{position:fixed;top:0;left:0;width:100%;height:72px;z-index:1000;transition:background .3s,box-shadow .3s;background:transparent}
+ .navbar.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(10px);box-shadow:0 1px 3px rgba(8,43,82,.06)}
+ .nav-inner{max-width:1280px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:100%}
+ .nav-logo img{height:38px;width:auto;object-fit:contain}
+ .nav-links{display:flex;align-items:center;gap:32px}
+ .nav-links a{font-size:.85rem;font-weight:500;color:#fff;transition:color .3s;position:relative}
+ .navbar.scrolled .nav-links a{color:#17202A}
+ .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+ .nav-cta{padding:9px 22px!important;background:var(--gold);color:#fff!important;border-radius:6px;font-weight:600;transition:background .3s}
+ .nav-cta:hover{background:var(--gold-dark)!important}
+
+ /* HAMBURGER */
+ .hamburger{display:none;flex-direction:column;gap:5px;padding:8px;z-index:1001}
+ .hamburger span{display:block;width:22px;height:2px;background:#fff;transition:.3s;border-radius:2px}
+ .navbar.scrolled .hamburger span{background:var(--navy)}
+ .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+ .hamburger.active span:nth-child(2){opacity:0}
+ .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+ /* MOBILE NAV */
+ .mobile-nav{display:none;position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(8,43,82,.97);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;pointer-events:none;transition:.3s}
+ .mobile-nav.active{opacity:1;pointer-events:all}
+ .mobile-nav a{font-size:1.3rem;color:#fff;transition:.3s;transform:translateY(16px);opacity:0}
+ .mobile-nav.active a{transform:translateY(0);opacity:1}
+ .mobile-nav a:hover{color:var(--gold)}
+
+ /* HERO */
+ .hero{position:relative;min-height:100vh;background:var(--navy);display:flex;align-items:center;overflow:hidden}
+ .hero-inner{max-width:1280px;margin:0 auto;padding:100px 40px 60px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+ .hero-label{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;padding:5px 14px;border:1px solid rgba(197,150,58,.3)}
+ .hero-title{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:400;line-height:1.15;color:#fff;margin-bottom:18px}
+ .hero-title .gold{color:var(--gold)}
+ .hero-text{font-size:1rem;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:28px;max-width:460px}
+ .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+ .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;font-size:.88rem;font-weight:600;border-radius:6px;transition:.3s;cursor:pointer;white-space:nowrap}
+ .btn-primary{background:var(--gold);color:#fff}
+ .btn-primary:hover{background:var(--gold-dark);transform:translateY(-1px)}
+ .btn-outline{border:2px solid rgba(255,255,255,.4);color:#fff;background:0 0}
+ .btn-outline:hover{background:#fff;color:var(--navy);border-color:#fff}
+ .hero-img{position:relative;height:480px;border-radius:14px;overflow:hidden}
+ .hero-img img{width:100%;height:100%;object-fit:cover}
+
+ /* FLOATING CARDS */
+ .float-card{position:absolute;background:#fff;padding:13px 18px;border-radius:10px;box-shadow:0 10px 40px rgba(8,43,82,.15);z-index:3;display:flex;align-items:center;gap:10px;animation:floatY 4s ease-in-out infinite}
+ .float-card.c1{top:28px;left:-28px}
+ .float-card.c2{bottom:40px;right:-22px;animation-delay:2s}
+ .fc-icon{width:36px;height:36px;background:var(--off-white);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+ .fc-icon svg{width:17px;height:17px;color:var(--gold)}
+ .fc-text{font-size:.75rem;font-weight:600;color:var(--navy);line-height:1.2}
+ .fc-sub{font-size:.66rem;color:var(--text-mid)}
+ @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+ /* ACCENT CIRCLES */
+ .accent{position:absolute;border-radius:50%;pointer-events:none}
+ .accent.a1{top:-14px;right:-14px;width:90px;height:90px;border:3px solid var(--gold);opacity:.22}
+ .accent.a2{bottom:50px;left:-22px;width:60px;height:60px;background:var(--gold);opacity:.1}
+
+ /* SECTIONS */
+ .section{padding:80px 0}
+ .container{max-width:1280px;margin:0 auto;padding:0 40px}
+ .label{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+ .heading{font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:400;line-height:1.25;color:var(--navy);margin-bottom:16px}
+ .heading.light{color:#fff}
+
+ /* TRUST STRIP */
+ .trust{background:#fff;padding:32px 0;border-bottom:1px solid var(--border)}
+ .trust p{text-align:center;font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-mid);margin-bottom:18px}
+ .trust-logos{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:28px 44px}
+ .trust-logos span{font-family:Georgia,serif;font-size:.92rem;font-weight:600;color:var(--text-mid)}
+
+ /* INTRO */
+ .intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+ .intro-img{height:420px;border-radius:14px;overflow:hidden;position:relative}
+ .intro-img img{width:100%;height:100%;object-fit:cover}
+ .intro-img .accent-box{position:absolute;bottom:-12px;right:-12px;width:64px;height:64px;background:var(--gold);opacity:.18;border-radius:10px;z-index:-1}
+ .intro-text p{font-size:.98rem;color:var(--text-mid);line-height:1.75;margin-bottom:22px}
+ .arrow-link{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.88rem;color:var(--navy);transition:.3s}
+ .arrow-link:hover{color:var(--gold);gap:12px}
+ .arrow-link svg{transition:.3s}
+ .arrow-link:hover svg{transform:translateX(3px)}
+
+ /* SERVICES PREVIEW */
+ .bg-gray{background:var(--off-white)}
+ .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
+ .svc-card{background:#fff;padding:30px 22px;border-radius:10px;transition:.3s;border:1px solid transparent;position:relative;overflow:hidden}
+ .svc-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:.3s}
+ .svc-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(8,43,82,.1);border-color:var(--border)}
+ .svc-card:hover::before{transform:scaleX(1)}
+ .svc-icon{width:42px;height:42px;background:var(--off-white);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:.3s}
+ .svc-card:hover .svc-icon{background:var(--navy)}
+ .svc-icon svg{width:19px;height:19px;color:var(--gold)}
+ .svc-card h3{font-family:Georgia,serif;font-size:1.05rem;font-weight:500;color:var(--navy);margin-bottom:8px}
+ .svc-card p{font-size:.85rem;color:var(--text-mid);line-height:1.6}
+
+ /* INDUSTRIES */
+ .industries{position:relative;background:var(--navy);padding:80px 0;overflow:hidden}
+ .industries .bg-img{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.06}
+ .industries .bg-img img{width:100%;height:100%;object-fit:cover}
+ .industries .container{position:relative;z-index:2}
+ .industries-header{text-align:center;margin-bottom:44px}
+ .ind-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+ .ind-item{display:flex;align-items:center;gap:10px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;transition:.3s}
+ .ind-item:hover{background:rgba(255,255,255,.1);border-color:rgba(197,150,58,.3);transform:translateY(-2px)}
+ .ind-dot{width:7px;height:7px;background:var(--gold);border-radius:50%;flex-shrink:0}
+ .ind-item span{font-size:.8rem;color:rgba(255,255,255,.82);font-weight:500}
+
+ /* FINAL CTA */
+ .final-cta{padding:80px 0;text-align:center}
+ .final-cta .heading{max-width:600px;margin:0 auto 12px}
+
+ /* FOOTER */
+ .footer{background:var(--navy-dark);padding:64px 0 0}
+ .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.06)}
+ .footer-logo img{height:30px;margin-bottom:14px;object-fit:contain}
+ .footer-brand h3{font-family:Georgia,serif;font-size:1.1rem;font-weight:500;color:#fff;margin-bottom:8px}
+ .footer-brand p{font-size:.82rem;color:rgba(255,255,255,.45)}
+ .footer-col h4{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px}
+ .footer-col a,.footer-col p{font-size:.84rem;color:rgba(255,255,255,.6);padding:3px 0;display:block;transition:.3s;line-height:1.7}
+ .footer-col a:hover{color:var(--gold)}
+ .footer-bottom{padding:18px 0}
+ .footer-bottom p{font-size:.76rem;color:rgba(255,255,255,.3)}
+
+ /* ANIMATIONS */
+ @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+ .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+ .reveal.visible{opacity:1;transform:translateY(0)}
+ .hero-content>*{opacity:0;animation:fadeUp .7s ease forwards}
+ .hero-content>:nth-child(1){animation-delay:.2s}
+ .hero-content>:nth-child(2){animation-delay:.35s}
+ .hero-content>:nth-child(3){animation-delay:.5s}
+ .hero-content>:nth-child(4){animation-delay:.65s}
+ .hero-img{opacity:0;animation:fadeUp .8s ease .3s forwards}
+
+ /* RESPONSIVE */
+ @media(max-width:1024px){
+ .svc-grid{grid-template-columns:repeat(2,1fr)}
+ .ind-grid{grid-template-columns:repeat(3,1fr)}
+ }
+ @media(max-width:768px){
+ .container{padding:0 20px}
+ .nav-links{display:none}
+ .hamburger{display:flex}
+ .mobile-nav{display:flex}
+ .hero-inner{grid-template-columns:1fr;padding:100px 20px 40px}
+ .hero-img{height:320px}
+ .float-card{display:none}
+ .intro-grid{grid-template-columns:1fr;gap:36px}
+ .svc-grid{grid-template-columns:1fr}
+ .ind-grid{grid-template-columns:repeat(2,1fr)}
+ .footer-grid{grid-template-columns:1fr;gap:32px}
+ }
+ @media(max-width:480px){
+ .hero-img{height:260px}
+ .ind-grid{grid-template-columns:1fr}
+ }
+
+ @media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+ .reveal{opacity:1;transform:none}
+ }
+ </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+ <div class="nav-inner">
+ <a href="index.html" class="nav-logo" aria-label="Home">
+ <img src="https://i.ibb.co/JRYvrYJW/Whats-App-Image-2026-08-31-at-3-42-55-PM.png" alt="Yenova HR Solutions">
+ </a>
+ <div class="nav-links">
+ <a href="index.html" class="active">Home</a>
+ <a href="about.html">About</a>
+ <a href="services.html">Services</a>
+ <a href="contact.html">Contact</a>
+ <a href="contact.html" class="nav-cta">Let's Talk</a>
+ </div>
+ <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+ </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+ <a href="index.html">Home</a>
+ <a href="about.html">About</a>
+ <a href="services.html">Services</a>
+ <a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+ <div class="hero-inner">
+ <div class="hero-content">
+ <span class="hero-label">Yenova HR Solutions</span>
+ <h1 class="hero-title">Connecting Talent.<br><span class="gold">Creating Growth.</span></h1>
+ <p class="hero-text">Specialized talent acquisition and HR solutions for growing businesses.</p>
+ <div class="hero-btns">
+ <a href="services.html" class="btn btn-primary">Explore Our Services</a>
+ <a href="contact.html" class="btn btn-outline">Talk to Us</a>
+ </div>
+ </div>
+ <div class="hero-img">
+ <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=85&fit=crop" alt="Professional business meeting" loading="eager">
+ <div class="accent a1"></div>
+ <div class="accent a2"></div>
+ <div class="float-card c1">
+ <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+ <div><div class="fc-text">Talent Acquisition</div><div class="fc-sub">Right People, Right Fit</div></div>
+ </div>
+ <div class="float-card c2">
+ <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+ <div><div class="fc-text">HR Solutions</div><div class="fc-sub">End-to-End Support</div></div>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="trust">
+ <div class="container">
+ <p>Trusted by Businesses</p>
+ <div class="trust-logos">
+ <span>Equitas Small Finance Bank</span>
+ <span>Casagrande</span>
+ <span>Urmila Enterprises</span>
+ <span>Merit Technologies</span>
+ <span>Evoriea</span>
+ <span>Goldenhomes</span>
+ </div>
+ </div>
+</section>
+
+<!-- INTRO -->
+<section class="section">
+ <div class="container">
+ <div class="intro-grid">
+ <div class="intro-img reveal">
+ <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=85&fit=crop" alt="Team collaboration" loading="lazy">
+ <div class="accent-box"></div>
+ </div>
+ <div class="intro-text reveal">
+ <span class="label">Who We Are</span>
+ <h2 class="heading">People are at the heart of every successful business.</h2>
+ <p>Yenova HR Solutions helps businesses connect with the right talent through personalized, industry-focused recruitment and staffing solutions.</p>
+ <a href="about.html" class="arrow-link">About Yenova <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+ </div>
+ </div>
+ </div>
+</section>
+
+<!-- SERVICES PREVIEW -->
+<section class="section bg-gray">
+ <div class="container">
+ <div class="reveal">
+ <span class="label">What We Do</span>
+ <h2 class="heading" style="text-align:center">Talent solutions built around your needs.</h2>
+ </div>
+ <div class="svc-grid">
+ <div class="svc-card reveal">
+ <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+ <h3>Talent Acquisition</h3>
+ <p>Identifying and connecting businesses with the right talent for their specific requirements.</p>
+ </div>
+ <div class="svc-card reveal">
+ <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+ <h3>Recruitment &amp; Staffing</h3>
+ <p>Personalized staffing support for employers seeking the right candidates.</p>
+ </div>
+ <div class="svc-card reveal">
+ <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+ <h3>Professional Hiring</h3>
+ <p>Recruitment support for experienced and specialized professionals.</p>
+ </div>
+ <div class="svc-card reveal">
+ <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+ <h3>Industry-Specific Recruitment</h3>
+ <p>Talent solutions aligned with the requirements of different business environments.</p>
+ </div>
+ </div>
+ <div style="text-align:center;margin-top:40px" class="reveal">
+ <a href="services.html" class="arrow-link">View All Services <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+ </div>
+ </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries">
+ <div class="bg-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&fit=crop" alt="" loading="lazy"></div>
+ <div class="container">
+ <div class="industries-header reveal">
+ <span class="label" style="color:rgba(255,255,255,.6)">Industries We Serve</span>
+ <h2 class="heading light" style="text-align:center">Across Industries. Connecting the Right Talent.</h2>
+ </div>
+ <div class="ind-grid">
+ <div class="ind-item"><div class="ind-dot"></div><span>Construction &amp; Infrastructure</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Renewable Energy / Solar</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Engineering &amp; Manufacturing</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Oil &amp; Gas</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>IT &amp; ITES</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Real Estate</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>BFSI</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Healthcare</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Logistics &amp; Supply Chain</span></div>
+ <div class="ind-item"><div class="ind-dot"></div><span>Hospitality</span></div>
+ </div>
+ </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section final-cta">
+ <div class="container">
+ <span class="label">Get Started</span>
+ <h2 class="heading">Let's Build the Right Team for Your Growth.</h2>
+ <p style="color:var(--text-mid);max-width:480px;margin:0 auto 28px;font-size:.98rem">Tell us what your business needs. Let's start a conversation.</p>
+ <a href="contact.html" class="btn btn-primary">Talk to Yenova</a>
+ </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+ <div class="container">
+ <div class="footer-grid">
+ <div class="footer-brand footer-logo">
+ <img src="https://i.ibb.co/JRYvrYJW/Whats-App-Image-2026-08-31-at-3-42-55-PM.png" alt="Yenova HR Solutions">
+ <h3>Yenova HR Solutions</h3>
+ <p>Connecting Talent &bull; Creating Growth</p>
+ </div>
+ <div class="footer-col">
+ <h4>Navigation</h4>
+ <a href="index.html">Home</a>
+ <a href="about.html">About</a>
+ <a href="services.html">Services</a>
+ <a href="contact.html">Contact</a>
+ </div>
+ <div class="footer-col">
+ <h4>Contact</h4>
+ <a href="tel:+919791074532">9791074532</a>
+ <a href="tel:+918525879110">8525879110</a>
+ <a href="mailto:info@yenovasolutions.com">info@yenovasolutions.com</a>
+ <p>No. 8, Ground Floor, Sri Anjenayar Flats, Roja Street, Gerugambakkam, Porur, Chennai – 600122</p>
+ </div>
+ </div>
+ <div class="footer-bottom"><p>&copy; 2026 Yenova HR Solutions. All Rights Reserved.</p></div>
+ </div>
+</footer>
+
+<script>
+(function(){
+ var navbar=document.getElementById('navbar');
+ var hamburger=document.getElementById('hamburger');
+ var mobileNav=document.getElementById('mobileNav');
+
+ window.addEventListener('scroll',function(){navbar.scrollY>50?navbar.classList.add('scrolled'):navbar.classList.remove('scrolled')},{passive:true});
+
+ hamburger.addEventListener('click',function(){hamburger.classList.contains('active')?closeMenu():openMenu()});
+ function openMenu(){hamburger.classList.add('active');mobileNav.classList.add('active');document.body.style.overflow='hidden'}
+ function closeMenu(){hamburger.classList.remove('active');mobileNav.classList.remove('active');document.body.style.overflow=''}
+ mobileNav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
+
+ document.querySelectorAll('.reveal').forEach(function(el){var io=new IntersectionObserver(function(e){e.forEach(function(r){r.isIntersecting&&r.target.classList.add('visible')})},{threshold:.1});io.observe(el)});
+})();
+</script>
+</body>
+</html>
